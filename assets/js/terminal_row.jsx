@@ -1,37 +1,26 @@
 import React from 'react';
 import LikenessWord from './likeness_word.jsx';
 
-var TerminalRow = React.createClass({
-  getDefaultProps: function() {
-    return {
-      base: 16,
-      rowPrefixLength: 4
-    }
-  },
+class TerminalRow extends React.Component {
+  constructor(props) {
+    super(props);
+    this.rowPrefix = this.rowPrefix.bind(this);
+    this.translateRowNumber = this.translateRowNumber.bind(this);
+    this.translateGarbage = this.translateGarbage.bind(this);
+  }
 
-  propTypes: {
-    body: React.PropTypes.object.isRequired,
-    onGuess: React.PropTypes.func.isRequired,
-    onHover: React.PropTypes.func.isRequired,
-    rowNumber: React.PropTypes.number.isRequired
-  },
-
-  rowPrefix: function() {
+  rowPrefix() {
     return "0x" + this.translateRowNumber(this.props.rowNumber);
-  },
+  }
   
-  translateRowNumber: function(rowNumber) {
+  translateRowNumber(rowNumber) {
     let convertedNumber = rowNumber.toString(this.props.base);
     let truncatedNumber = convertedNumber.substring(convertedNumber.length - this.props.rowPrefixLength);
     let rowPadding = "0".repeat(this.props.rowPrefixLength - truncatedNumber.length);
     return rowPadding + truncatedNumber;
-  },
+  }
 
-  noop: function() {
-    return false;
-  },
-
-  translateGarbage: function(text) {
+  translateGarbage(text) {
     if(!text){
       return;
     }
@@ -51,9 +40,9 @@ var TerminalRow = React.createClass({
         })}
       </span>
     );
-  },
+  }
 
-  render: function() {
+  render() {
     return (
       <div className='terminal-row'>
         {this.rowPrefix()}: {this.translateGarbage(this.props.body.prefix)}{
@@ -69,6 +58,6 @@ var TerminalRow = React.createClass({
       </div>
     );
   }
-});
+}
 
-module.exports = TerminalRow;
+export default TerminalRow;
