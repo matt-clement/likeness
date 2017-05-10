@@ -29,6 +29,7 @@ class LikenessApp extends React.Component {
     this.win = this.win.bind(this);
     this.bumpAttempts = this.bumpAttempts.bind(this);
     this.bumpWinCount = this.bumpWinCount.bind(this);
+    this.bumpLossCount = this.bumpLossCount.bind(this);
     this.selectWinningWord = this.selectWinningWord.bind(this);
     this.newGame = this.newGame.bind(this);
     this.newGameButton = this.newGameButton.bind(this);
@@ -61,7 +62,9 @@ class LikenessApp extends React.Component {
   onGuess(ev) {
     let currentGuess = ev.currentTarget.textContent;
     let guessTest = this.likeness(this.state.winner, currentGuess);
-    this.setState({guesses: this.state.guesses.concat(guessTest)});
+    this.setState((prevState, props) => ({
+      guesses: prevState.guesses.concat(guessTest)
+    }));
     if (guessTest.alike) {
       this.win();
     } else {
@@ -74,17 +77,18 @@ class LikenessApp extends React.Component {
     this.newGame();
   }
 
+  lose() {
+    this.bumpLossCount();
+    this.newGame();
+  }
+
   bumpAttempts() {
-    let attempts = this.state.attempts;
-    if(attempts -= 1 > 0) {
-      this.setState({
-        attempts: attempts,
-      });
-    } else {
+    if(this.state.attempts > 1) {
       this.setState((prevState, props) => ({
-        lossCount: prevState.lossCount + 1,
-        attempts: this.state.maxAttempts,
+        attempts: prevState.attempts - 1
       }));
+    } else {
+      this.lose();
       this.newGame();
     }
     
@@ -93,6 +97,12 @@ class LikenessApp extends React.Component {
   bumpWinCount() {
     this.setState((prevState, props) => ({
       winCount: prevState.winCount + 1,
+    }));
+  }
+
+  bumpLossCount() {
+    this.setState((prevState, props) => ({
+      lossCount: prevState.lossCount + 1,
     }));
   }
 
