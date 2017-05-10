@@ -1,0 +1,74 @@
+// Place all the styles related to the Welcome controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+@import 'common';
+body {
+  background: $background-secondary; /* For browsers that do not support gradients */
+  background: -webkit-linear-gradient($background-primary, $background-secondary, $background-primary) fixed; /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient($background-primary, $background-secondary, $background-primary) fixed; /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient($background-primary, $background-secondary, $background-primary) fixed; /* For Firefox 3.6 to 15 */
+  background: linear-gradient($background-primary, $background-secondary, $background-primary) fixed; /* Standard syntax */
+}
+
+span.attempt-counter {
+ letterSpacing: 5px;
+}
+
+.code-container ul {
+  list-style: none;
+  margin-left: 0;
+  padding-left: 0;
+}
+
+.code-container li:before {
+  content: '>';
+  margin: 0 1em;
+}
+
+.code {
+  word-break: break-all;
+}
+
+.code-container {
+  margin: auto;
+  border-radius: 5px;
+  border-width: 10px;
+  border-color: grey;
+  border-style: double;
+  width: 80%;
+  max-width: 60em;
+  min-width: 50em;
+  height: 30em;
+  padding: 15px;
+  color: $text-primary;
+  font-weight: bold;
+  text-shadow: 0 0 8px rgba(0,160,0, 0.7);
+  font-family: $font-primary;
+  letter-spacing: 1px;
+  background-height: 10px;
+  background-repeat: repeat-y;
+  background: $background-code; /* For browsers that do not support gradients */
+  background: -webkit-linear-gradient(0deg, #000000, #001100 5px, #000000 5px, #001100 5px); /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(0deg, #000000, #001100 5px, #000000 5px, #001100 5px); /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(0deg, #000000, #001100 5px, #000000 5px, #001100 5px); /* For Firefox 3.6 to 15 */
+  background: repeating-linear-gradient(0deg, #000000, #001100 5px, #000000 5px, #001100 5px); /* Standard syntax */
+}
+
+.code-column {
+  display: inline-block;
+  margin: 15px;
+}
+
+.code-highlighted {
+  background-color: $text-primary;
+  color: $background-code;
+}
+
+div.guess-display {
+  display: flex;
+  flex-direction: row;
+}
+
+#guess-container {
+  align-self: flex-end;
+}
