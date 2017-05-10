@@ -2,7 +2,7 @@ import React from 'react';
 
 const repeatedBlocks = (repeat) => (
   <span className="attempt-counter">
-    {_.repeat("\u2588 ", repeat)}
+    {_.repeat(String.fromCodePoint(0x2588) + " ", repeat)}
   </span>
 );
 
