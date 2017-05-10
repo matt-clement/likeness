@@ -1,12 +1,12 @@
 import React from 'react';
 
-var GuessList = React.createClass({
-  propTypes: {
-    guesses: React.PropTypes.array,
-    hovered: React.PropTypes.string,
-  },
+class GuessList extends React.Component {
+  constructor(props) {
+    super(props);
+    this.guessList = this.guessList.bind(this);
+  }
 
-  guessList: function(){
+  guessList() {
     var that = this;
     return (
       <ul>
@@ -21,15 +21,15 @@ var GuessList = React.createClass({
         <li key="newEntry">{this.props.hovered}</li>
       </ul>
     );
-  },
+  }
 
-  render: function() {
+  render() {
     return (
       <div id="guess-list">
         {this.guessList()}
       </div>
     );
   }
-});
+}
 
-module.exports = GuessList;
+export default GuessList;
