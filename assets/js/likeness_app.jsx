@@ -3,32 +3,46 @@ import Attempts from './attempts.jsx';
 import LikenessDisplay from './likeness_display.jsx';
 
 var WordsApi = {
+  // This was originally going to hit an external endpoint to grab a
+  // dynamically generated list of words. It may do that someday, but
+  // that's outside of the scope of this project.
   get: function(onSuccess) {
     onSuccess(['test', 'word', 'list', 'best', 'most', 'host', 'lose', 'ship']);
   }
 }
 
-var LikenessApp = React.createClass({
-  getInitialState: function() {
-    let garbledLetters = '(){}[],`\'"';
-    let maxAttempts = 4;
-    return {
+class LikenessApp extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
       words: [],
-      garbledLetters: garbledLetters,
+      garbledLetters: '(){}[],`\'"',
       winCount: 0,
       lossCount: 0,
-      attempts: maxAttempts,
-      maxAttempts: maxAttempts,
+      attempts: 4,
+      maxAttempts: 4,
       guesses: [],
       repeatChar: '.',
     }
-  },
 
-  componentDidMount: function() {
+    this.onGuess = this.onGuess.bind(this);
+    this.win = this.win.bind(this);
+    this.bumpAttempts = this.bumpAttempts.bind(this);
+    this.bumpWinCount = this.bumpWinCount.bind(this);
+    this.selectWinningWord = this.selectWinningWord.bind(this);
+    this.newGame = this.newGame.bind(this);
+    this.newGameButton = this.newGameButton.bind(this);
+    this.resetBoard = this.resetBoard.bind(this);
+    this.randomLetters = this.randomLetters.bind(this);
+    this.textBlock = this.textBlock.bind(this);
+    this.terminalTitle = this.terminalTitle.bind(this);
+  }
+
+  componentDidMount() {
     this.newGame();
-  },
+  }
 
-  likeness: function(winningWord, guessWord) {
+  likeness(winningWord, guessWord) {
     let wordLength = winningWord.length;
     let likeLetters = 0;
     _.forIn(winningWord, function(letter, index){
@@ -42,9 +56,9 @@ var LikenessApp = React.createClass({
       alike: alike,
       likeness: likeLetters
     };
-  },
+  }
 
-  onGuess: function(ev) {
+  onGuess(ev) {
     let currentGuess = ev.currentTarget.textContent;
     let guessTest = this.likeness(this.state.winner, currentGuess);
     this.setState({guesses: this.state.guesses.concat(guessTest)});
@@ -53,57 +67,44 @@ var LikenessApp = React.createClass({
     } else {
       this.bumpAttempts();
     }
-  },
+  }
 
-  win: function() {
-    this.setState({winCount: this.state.winCount + 1});
+  win() {
+    this.bumpWinCount();
     this.newGame();
-  },
+  }
 
-  bumpAttempts: function() {
+  bumpAttempts() {
     let attempts = this.state.attempts;
     if(attempts -= 1 > 0) {
       this.setState({
         attempts: attempts,
       });
     } else {
-      this.setState({
-        lossCount: this.state.lossCount + 1,
-        attempts: this.state.maxAttempts
-      });
+      this.setState((prevState, props) => ({
+        lossCount: prevState.lossCount + 1,
+        attempts: this.state.maxAttempts,
+      }));
       this.newGame();
     }
     
-  },
+  }
   
-  selectWinningWord: function(words) {
-    return words[_.random(0,words.length - 1)];
-  },
-
-  bumpCount: function() {
-    this.setState((prevSate, props) => ({
+  bumpWinCount() {
+    this.setState((prevState, props) => ({
       winCount: prevState.winCount + 1,
     }));
-  },
+  }
 
-  newGame: function() {
-    var that = this;
-    WordsApi.get(function(resp) {
-      that.resetBoard(resp)
-    });
-  },
+  selectWinningWord(words) {
+    return words[_.random(0,words.length - 1)];
+  }
 
-  resetBoard: function(words) {
-    this.setState({
-      words: words,
-      winner: this.selectWinningWord(words),
-      guesses: [],
-      attempts: this.state.maxAttempts,
-    })
-    this.refs.ld.refreshBoard();
-  },
+  newGame() {
+    WordsApi.get((resp) => {this.resetBoard(resp)});
+  }
 
-  newGameButton: function() {
+  newGameButton() {
     return (
       <button
         type="button"
@@ -111,25 +112,34 @@ var LikenessApp = React.createClass({
         New Game!
       </button>
     );
-  },
+  }
 
-  randomLetters: function(letterSet, length) {
+  resetBoard(words) {
+    this.setState({
+      words: words,
+      winner: this.selectWinningWord(words),
+      guesses: [],
+      attempts: this.state.maxAttempts,
+    }, this.refs.ld.refreshBoard)
+  }
+
+  randomLetters(letterSet, length) {
     let retStr = "";
     _.times(length, function() {
       retStr = retStr.concat(letterSet[_.random(0, letterSet.length - 1)]);
     });
     return retStr;
-  },
+  }
 
-  textBlock: function() {
+  textBlock() {
     return (
       <div className="code">
         {this.randomLetters(this.state.garbledLetters, 500)}
       </div>
     );
-  },
+  }
 
-  terminalTitle: function() {
+  terminalTitle() {
     let title = "BOBCO Industries Terminal (tm) | Wins: " + this.state.winCount + " | Losses: " + this.state.lossCount;
     let instruction = "Please enter password now.";
     return (
@@ -137,9 +147,9 @@ var LikenessApp = React.createClass({
         <p>{title}<br />{instruction}</p>
       </div>
     );
-  },
+  }
 
-  render: function() {
+  render() {
     return (
       <div id="app_container">
         <div className="code-container">
@@ -151,6 +161,6 @@ var LikenessApp = React.createClass({
       </div>
     );
   }
-});
+}
 
-module.exports = LikenessApp;
+export default LikenessApp;
