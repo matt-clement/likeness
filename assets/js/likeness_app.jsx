@@ -16,13 +16,10 @@ class LikenessApp extends React.Component {
     super(props);
     this.state = {
       words: [],
-      garbledLetters: '(){}[],`\'"',
       winCount: 0,
       lossCount: 0,
-      attempts: 4,
-      maxAttempts: 4,
+      attempts: this.props.maxAttempts,
       guesses: [],
-      repeatChar: '.',
     }
 
     this.onGuess = this.onGuess.bind(this);
@@ -34,8 +31,6 @@ class LikenessApp extends React.Component {
     this.newGame = this.newGame.bind(this);
     this.newGameButton = this.newGameButton.bind(this);
     this.resetBoard = this.resetBoard.bind(this);
-    this.randomLetters = this.randomLetters.bind(this);
-    this.textBlock = this.textBlock.bind(this);
     this.terminalTitle = this.terminalTitle.bind(this);
   }
 
@@ -130,24 +125,8 @@ class LikenessApp extends React.Component {
       words: words,
       winner: this.selectWinningWord(words),
       guesses: [],
-      attempts: this.state.maxAttempts,
+      attempts: this.props.maxAttempts,
     }, this.refs.ld.refreshBoard)
-  }
-
-  randomLetters(letterSet, length) {
-    let retStr = "";
-    _.times(length, function() {
-      retStr = retStr.concat(letterSet[_.random(0, letterSet.length - 1)]);
-    });
-    return retStr;
-  }
-
-  textBlock() {
-    return (
-      <div className="code">
-        {this.randomLetters(this.state.garbledLetters, 500)}
-      </div>
-    );
   }
 
   terminalTitle() {
@@ -176,4 +155,7 @@ class LikenessApp extends React.Component {
   }
 }
 
+LikenessApp.defaultProps = {
+  maxAttempts: 4,
+}
 export default LikenessApp;

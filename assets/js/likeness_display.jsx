@@ -23,7 +23,7 @@ class LikenessDisplay extends React.Component {
   }
 
   validRowNumber() {
-    return Math.floor(Math.random() * Math.pow(16,4));
+    return Math.floor(Math.random() * this.props.maxRowNumber);
   }
 
   hoveredText(text) {
@@ -133,6 +133,7 @@ LikenessDisplay.defaultProps = {
   charPerRow: 16,
   minRows: 16,
   maxColumns: 2,
+  maxRowNumber: Math.pow(16,4),
 }
 
 export default LikenessDisplay;
