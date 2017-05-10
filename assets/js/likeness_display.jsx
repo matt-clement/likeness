@@ -118,9 +118,7 @@ class LikenessDisplay extends React.Component {
             </div>
           );
         })}
-        <div id="guess-container">
-          <GuessList style={{minHeight: "200px"}} guesses={this.props.guesses} hovered={this.state.hoveredWord}/>
-        </div>
+        <GuessList guesses={this.props.guesses} hovered={this.state.hoveredWord}/>
       </div>
     );
   }

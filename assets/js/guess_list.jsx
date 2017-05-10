@@ -7,10 +7,9 @@ class GuessList extends React.Component {
   }
 
   guessList() {
-    var that = this;
     return (
-      <ul>
-        {_.map(this.props.guesses, function(guessData) {
+      <ul className="guess-list">
+        {_.map(this.props.guesses, (guessData) => {
             let guessWord = guessData.word;
             let likeness = guessData.likeness;
             let entry = likeness == guessWord.length ? "Entry accepted." : "Entry denied."
@@ -18,7 +17,6 @@ class GuessList extends React.Component {
             return <li key={guessWord}>{guessWord}<br />{entry}<br />{numberCorrect}</li>
           })
         }
-        <li key="newEntry">{this.props.hovered}</li>
       </ul>
     );
   }
@@ -27,6 +25,9 @@ class GuessList extends React.Component {
     return (
       <div id="guess-list">
         {this.guessList()}
+        <ul>
+          <li key="newEntry">{this.props.hovered}</li>
+        </ul>
       </div>
     );
   }

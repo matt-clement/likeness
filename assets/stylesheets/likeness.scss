@@ -15,12 +15,14 @@ div.app-control {
   justify-content: center;
   padding: 1em;
 }
+
 button.control {
-  width: 20%;
-  min-width: 20em;
+  width: 20em;
+  height: 2em;
 }
+
 span.attempt-counter {
- letterSpacing: 5px;
+  letterSpacing: 5px;
 }
 
 .code-container ul {
@@ -76,8 +78,11 @@ span.attempt-counter {
 div.guess-display {
   display: flex;
   flex-direction: row;
+  height: 80%;
 }
 
-#guess-container {
-  align-self: flex-end;
+#guess-list {
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: column;
 }
