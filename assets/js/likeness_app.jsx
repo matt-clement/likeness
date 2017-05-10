@@ -2,12 +2,28 @@ import React from 'react';
 import Attempts from './attempts.jsx';
 import LikenessDisplay from './likeness_display.jsx';
 
-var WordsApi = {
+const WordsApi = {
   // This was originally going to hit an external endpoint to grab a
   // dynamically generated list of words. It may do that someday, but
   // that's outside of the scope of this project.
   get: function(onSuccess) {
-    onSuccess(['test', 'word', 'list', 'best', 'most', 'host', 'lose', 'ship']);
+    onSuccess(
+      [
+        'test',
+        'list',
+        'best',
+        'most',
+        'host',
+        'hold',
+        'boat',
+        'load',
+        'bump',
+        'ship',
+        'jump',
+        'just',
+        'lump',
+      ]
+    );
   }
 }
 
