@@ -17,6 +17,7 @@ class TerminalRow extends React.Component {
     let convertedNumber = rowNumber.toString(this.props.base);
     let truncatedNumber = convertedNumber.substring(convertedNumber.length - this.props.rowPrefixLength);
     let rowPadding = "0".repeat(this.props.rowPrefixLength - truncatedNumber.length);
+
     return rowPadding + truncatedNumber;
   }
 
@@ -56,6 +57,11 @@ class TerminalRow extends React.Component {
       </div>
     );
   }
+}
+
+TerminalRow.defaultProps = {
+  base: 16,
+  rowPrefixLength: 4,
 }
 
 export default TerminalRow;
