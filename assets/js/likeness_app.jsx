@@ -118,6 +118,7 @@ class LikenessApp extends React.Component {
     return (
       <button
         type="button"
+        className="control"
         onClick={this.newGame}>
         New Game!
       </button>
@@ -161,13 +162,15 @@ class LikenessApp extends React.Component {
 
   render() {
     return (
-      <div id="app_container">
+      <div id="app-container">
         <div className="code-container">
           {this.terminalTitle()}
           <Attempts remaining={this.state.attempts} />
           <LikenessDisplay ref="ld" onGuess={this.onGuess} words={this.state.words} guesses={this.state.guesses}/>
         </div>
-        {this.newGameButton()}
+        <div className="app-control">
+          {this.newGameButton()}
+        </div>
       </div>
     );
   }
