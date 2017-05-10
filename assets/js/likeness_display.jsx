@@ -2,59 +2,58 @@ import React from 'react';
 import TerminalRow from './terminal_row.jsx';
 import GuessList from './guess_list.jsx';
 
-var LikenessDisplay = React.createClass({
-  getDefaultProps: function() {
-    return {
-      defaultHoveredWord: "_",
-      garbledLetters: '(){}[]<>@?!+=-_|^;:%$#,`\'"',
-      guesses: [],
-      rowInterval: 8,
-      base: 16,
-      charPerRow: 16,
-      minRows: 16,
-      maxColumns: 2,
-    }
-  },
+class LikenessDisplay extends React.Component {
+  constructor(props) {
+    super(props);
 
-  getInitialState: function() {
-    return {
+    this.state = {
       columns: this.generateBody(),
       hoveredWord: this.props.defaultHoveredWord
     }
-  },
 
-  validRowNumber: function() {
+    this.validRowNumber = this.validRowNumber.bind(this);
+    this.hoveredText = this.hoveredText.bind(this);
+    this.getRandBetween = this.getRandBetween.bind(this);
+    this.garbageString = this.garbageString.bind(this);
+    this.numberOfRows = this.numberOfRows.bind(this);
+    this.numberOfColumns = this.numberOfColumns.bind(this);
+    this.generateRow = this.generateRow.bind(this);
+    this.refreshBoard = this.refreshBoard.bind(this);
+    this.generateBody = this.generateBody.bind(this);
+  }
+
+  validRowNumber() {
     return Math.floor(Math.random() * Math.pow(16,4));
-  },
+  }
 
-  hoveredText: function(text) {
+  hoveredText(text) {
     this.setState({
       hoveredWord: text || this.props.defaultHoveredWord
     });
-  },
+  }
 
-  getRandBetween: function(min, max) {
+  getRandBetween(min, max) {
     return Math.random() * (max - min) + min;
-  },
+  }
 
-  garbageString: function(length){
+  garbageString(length){
     let returnStr = '';
     let junk = this.props.garbledLetters;
     for (let i = 0; i < length; i++) {
       returnStr += junk.charAt(this.getRandBetween(0, junk.length - 1));
     }
     return returnStr;
-  },
+  }
 
-  numberOfRows: function() {
+  numberOfRows() {
     return Math.max(this.props.minRows, this.props.words.length * 2);
-  },
+  }
 
-  numberOfColumns: function() {
+  numberOfColumns() {
     return Math.min(this.props.maxColumns, Math.floor(this.numberOfRows() / 4));
-  },
+  }
 
-  generateRow: function(lineLength, word) {
+  generateRow(lineLength, word) {
     let prefix, suffix;
     if (typeof word === "undefined") {
       prefix = this.garbageString(lineLength);
@@ -67,15 +66,15 @@ var LikenessDisplay = React.createClass({
       suffix = null;
     }
     return {prefix: prefix, suffix: suffix, word: word};
-  },
+  }
 
-  refreshBoard: function() {
+  refreshBoard() {
     this.setState({
       columns: this.generateBody(),
     });
-  },
+  }
 
-  generateBody: function() {
+  generateBody() {
     let that = this;
     let rowNumberStart = this.validRowNumber();
     let formatRow = this.generateRow.bind(this, this.props.charPerRow);
@@ -106,9 +105,9 @@ var LikenessDisplay = React.createClass({
         rowsPerColumn
       )
     )
-  },
+  }
 
-  render: function() {
+  render() {
     let that = this;
     return (
       <div className="guess-display">
@@ -125,6 +124,17 @@ var LikenessDisplay = React.createClass({
       </div>
     );
   }
-});
+}
 
-module.exports = LikenessDisplay;
+LikenessDisplay.defaultProps = {
+  defaultHoveredWord: "_",
+  garbledLetters: '(){}[]<>@?!+=-_|^;:%$#,`\'"',
+  guesses: [],
+  rowInterval: 8,
+  base: 16,
+  charPerRow: 16,
+  minRows: 16,
+  maxColumns: 2,
+}
+
+export default LikenessDisplay;
