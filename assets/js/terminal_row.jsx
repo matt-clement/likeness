@@ -24,20 +24,18 @@ class TerminalRow extends React.Component {
     if(!text){
       return;
     }
-    var that = this;
     return (
       <span>
-        {_.map(text.split(""), function(ch, index) {
-          return (
+        {_.map(text.split(""), (ch, index)  => (
             <LikenessWord
               enabled={true}
               inert={true}
               key={index}
-              onHover={that.props.onHover}
-              onGuess={that.noop}
+              onHover={this.props.onHover}
+              onGuess={this.noop}
               word={ch}
-            />)
-        })}
+            />
+        ))}
       </span>
     );
   }
