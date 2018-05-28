@@ -11,7 +11,7 @@ const config = {
     rules: [
       {
         test: /\.(js|jsx)$/,
-        use: ['react-hot-loader', 'jsx-loader', 'babel-loader'],
+        use: ['react-hot-loader/webpack', 'jsx-loader', 'babel-loader'],
         exclude: /node_modules/
       },
       {
