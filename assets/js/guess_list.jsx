@@ -1,4 +1,5 @@
 import React from 'react';
+import _ from 'lodash';
 
 class GuessList extends React.Component {
   constructor(props) {
@@ -8,15 +9,14 @@ class GuessList extends React.Component {
 
   guessList() {
     return (
-      <ul className="guess-list">
+      <ul id="previous-guesses" className="guess-list">
         {_.map(this.props.guesses, (guessData) => {
-            let guessWord = guessData.word;
-            let likeness = guessData.likeness;
-            let entry = likeness == guessWord.length ? "Entry accepted." : "Entry denied."
-            let numberCorrect = likeness + "/" + guessWord.length + " correct."
-            return <li key={guessWord}>{guessWord}<br />{entry}<br />{numberCorrect}</li>
-          })
-        }
+          let guessWord = guessData.word;
+          let likeness = guessData.likeness;
+          let entry = likeness == guessWord.length ? "Entry accepted." : "Entry denied."
+          let numberCorrect = likeness + "/" + guessWord.length + " correct."
+          return <li key={guessWord}>{guessWord}<br />{entry}<br />{numberCorrect}</li>
+        })}
       </ul>
     );
   }
@@ -25,8 +25,8 @@ class GuessList extends React.Component {
     return (
       <div id="guess-list">
         {this.guessList()}
-        <ul>
-          <li key="newEntry">{this.props.hovered}</li>
+        <ul id="new-entry-list">
+          <li id="new-entry" key="new-entry">{this.props.hovered}</li>
         </ul>
       </div>
     );
