@@ -15,21 +15,15 @@ const previousGuesses = (guesses) => {
   );
 };
 
-class GuessList extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    return (
-      <div id="guess-list">
-        {previousGuesses(this.props.guesses)}
-        <ul id="new-entry-list">
-          <li id="new-entry" key="new-entry">{this.props.hovered}</li>
-        </ul>
-      </div>
-    );
-  }
-}
+const GuessList = ({ guesses, hovered }) => {
+  return (
+    <div id="guess-list">
+      {previousGuesses(guesses)}
+      <ul id="new-entry-list">
+        <li id="new-entry" key="new-entry">{hovered}</li>
+      </ul>
+    </div>
+  );
+};
 
 export default GuessList;
