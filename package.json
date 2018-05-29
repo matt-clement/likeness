@@ -33,6 +33,7 @@
   },
   "scripts": {
     "test": "mocha --require babel-core/register --require jsdom-global/register",
+    "test-watch": "mocha --require babel-core/register --require jsdom-global/register --reporter min --watch --watch-extensions jsx",
     "dev": "webpack-dev-server --mode development",
     "build": "webpack --mode production"
   },
