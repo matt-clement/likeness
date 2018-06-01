@@ -1,6 +1,6 @@
 import React from 'react';
 
-const previousGuess = ({word, likeness}) => {
+const previousGuess = ({ word, likeness }) => {
   const accepted = likeness == word.length ? "Entry accepted." : "Entry denied.";
   const numberCorrect = `${likeness}/${word.length} correct.`;
   return <li key={word}>{word}<br />{accepted}<br />{numberCorrect}</li>;
@@ -22,7 +22,7 @@ const newEntry = (entry) => {
   );
 }
 
-const GuessList = ({ guesses, hovered, renderGuesses, renderNewEntry}) => {
+const GuessList = ({ guesses, hovered, renderGuesses, renderNewEntry }) => {
   return (
     <div id="guess-list">
       {renderGuesses(guesses)}
