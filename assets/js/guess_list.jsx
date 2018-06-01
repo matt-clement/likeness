@@ -1,10 +1,9 @@
 import React from 'react';
-import _ from 'lodash';
 
 const previousGuesses = (guesses) => {
   return (
     <ul id="previous-guesses" className="guess-list">
-      {_.map(guesses, (guessData) => {
+      {guesses.map((guessData) => {
         let guessWord = guessData.word;
         let likeness = guessData.likeness;
         let entry = likeness == guessWord.length ? "Entry accepted." : "Entry denied."
@@ -25,5 +24,9 @@ const GuessList = ({ guesses, hovered }) => {
     </div>
   );
 };
+
+GuessList.defaultProps = {
+  guesses: []
+}
 
 export default GuessList;
