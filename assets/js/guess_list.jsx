@@ -1,9 +1,9 @@
 import React from 'react';
 
 const previousGuess = ({word, likeness}) => {
-  const entry = likeness == word.length ? "Entry accepted." : "Entry denied."
-  const numberCorrect = likeness + "/" + word.length + " correct."
-  return <li key={word}>{word}<br />{entry}<br />{numberCorrect}</li>;
+  const accepted = likeness == word.length ? "Entry accepted." : "Entry denied.";
+  const numberCorrect = `${likeness}/${word.length} correct.`;
+  return <li key={word}>{word}<br />{accepted}<br />{numberCorrect}</li>;
 }
 
 const previousGuesses = (guesses) => {
