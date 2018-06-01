@@ -1,32 +1,40 @@
 import React from 'react';
 
+const previousGuess = ({word, likeness}) => {
+  const entry = likeness == word.length ? "Entry accepted." : "Entry denied."
+  const numberCorrect = likeness + "/" + word.length + " correct."
+  return <li key={word}>{word}<br />{entry}<br />{numberCorrect}</li>;
+}
+
 const previousGuesses = (guesses) => {
   return (
     <ul id="previous-guesses" className="guess-list">
-      {guesses.map((guessData) => {
-        let guessWord = guessData.word;
-        let likeness = guessData.likeness;
-        let entry = likeness == guessWord.length ? "Entry accepted." : "Entry denied."
-        let numberCorrect = likeness + "/" + guessWord.length + " correct."
-        return <li key={guessWord}>{guessWord}<br />{entry}<br />{numberCorrect}</li>
-      })}
+      {guesses.map(previousGuess)}
     </ul>
   );
 };
 
-const GuessList = ({ guesses, hovered }) => {
+const newEntry = (entry) => {
+  return (
+    <ul id="new-entry-list">
+      <li id="new-entry" key="new-entry">{entry}</li>
+    </ul>
+  );
+}
+
+const GuessList = ({ guesses, hovered, renderGuesses, renderNewEntry}) => {
   return (
     <div id="guess-list">
-      {previousGuesses(guesses)}
-      <ul id="new-entry-list">
-        <li id="new-entry" key="new-entry">{hovered}</li>
-      </ul>
+      {renderGuesses(guesses)}
+      {renderNewEntry(hovered)}
     </div>
   );
 };
 
 GuessList.defaultProps = {
-  guesses: []
+  guesses: [],
+  renderGuesses: previousGuesses,
+  renderNewEntry: newEntry,
 }
 
 export default GuessList;
